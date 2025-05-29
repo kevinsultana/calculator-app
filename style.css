@@ -68,7 +68,7 @@ body.dark {
 }
 
 #container button:active {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
 
 .btn {
@@ -89,6 +89,10 @@ body.dark {
   justify-self: center;
   display: flex;
   fill: #fff;
+}
+
+.rotate {
+  transform: rotate(180deg);
 }
 
 .op {

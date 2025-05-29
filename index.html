@@ -9,13 +9,13 @@
   <body>
     <button id="toggle-mode">toggle</button>
     <div id="container">
-      <input type="text" id="display" disabled />
+      <input type="text" id="display" disabled placeholder="0" />
 
       <!-- first row -->
-      <button class="btn clear">C</button>
-      <button class="btn clear">
+      <button class="btn clear" onclick="clearDisplay()">C</button>
+      <button class="btn clear" onclick="deleteLast()">
         <svg
-          class="svg"
+          class="svg rotate"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 576 512"
         >
@@ -24,7 +24,7 @@
           />
         </svg>
       </button>
-      <button class="btn op">
+      <button class="btn op" onclick="appendOperator('/100')">
         <svg
           class="svg"
           xmlns="http://www.w3.org/2000/svg"
@@ -35,39 +35,7 @@
           />
         </svg>
       </button>
-      <button class="btn op">
-        <svg
-          class="svg"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 448 512"
-        >
-          <path
-            d="M272 96a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 320a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM400 288c17.7 0 32-14.3 32-32s-14.3-32-32-32L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l352 0z"
-          />
-        </svg>
-      </button>
-
-      <!-- second row -->
-      <button class="btn">7</button>
-      <button class="btn">8</button>
-      <button class="btn">9</button>
-      <button class="btn op">
-        <svg
-          class="svg"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 448 512"
-        >
-          <path
-            d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"
-          />
-        </svg>
-      </button>
-
-      <!-- third row -->
-      <button class="btn">4</button>
-      <button class="btn">5</button>
-      <button class="btn">6</button>
-      <button class="btn op">
+      <button class="btn op" onclick="appendOperator('*')">
         <svg
           class="svg"
           xmlns="http://www.w3.org/2000/svg"
@@ -79,11 +47,44 @@
         </svg>
       </button>
 
+      <!-- second row -->
+      <button class="btn" onclick="appendValue('7')">7</button>
+      <button class="btn" onclick="appendValue('8')">8</button>
+      <button class="btn" onclick="appendValue('9')">9</button>
+
+      <button class="btn op" onclick="appendOperator('/')">
+        <svg
+          class="svg"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
+          <path
+            d="M272 96a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 320a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM400 288c17.7 0 32-14.3 32-32s-14.3-32-32-32L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l352 0z"
+          />
+        </svg>
+      </button>
+
+      <!-- third row -->
+      <button class="btn" onclick="appendValue('4')">4</button>
+      <button class="btn" onclick="appendValue('5')">5</button>
+      <button class="btn" onclick="appendValue('6')">6</button>
+      <button class="btn op" onclick="appendOperator('-')">
+        <svg
+          class="svg"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
+          <path
+            d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"
+          />
+        </svg>
+      </button>
+
       <!-- fourth row -->
-      <button class="btn">1</button>
-      <button class="btn">2</button>
-      <button class="btn">3</button>
-      <button class="btn op">
+      <button class="btn" onclick="appendValue('1')">1</button>
+      <button class="btn" onclick="appendValue('2')">2</button>
+      <button class="btn" onclick="appendValue('3')">3</button>
+      <button class="btn op" onclick="appendOperator('+')">
         <svg
           class="svg"
           xmlns="http://www.w3.org/2000/svg"
@@ -96,9 +97,9 @@
       </button>
 
       <!-- fifth row -->
-      <button class="btn zero">0</button>
-      <button class="btn">.</button>
-      <button class="btn op">
+      <button class="btn zero" onclick="appendValue('0')">0</button>
+      <button class="btn" onclick="appendValue('.')">.</button>
+      <button class="btn op" onclick="calculate()">
         <svg
           class="svg"
           xmlns="http://www.w3.org/2000/svg"
