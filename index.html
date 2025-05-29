@@ -9,7 +9,14 @@
   <body>
     <button id="toggle-mode">toggle</button>
     <div id="container">
-      <input type="text" id="display" disabled placeholder="0" />
+      <input
+        type="text"
+        id="display"
+        disabled
+        placeholder="0"
+        inputmode="numeric"
+        pattern="[0-9]*"
+      />
 
       <!-- first row -->
       <button class="btn clear" onclick="clearDisplay()">C</button>
