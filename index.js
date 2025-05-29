@@ -5,7 +5,6 @@ toggleBtn.addEventListener("click", () => {
 });
 
 const display = document.getElementById("display");
-const buttons = document.querySelectorAll(".btn");
 
 function appendValue(value) {
   display.value += value;
