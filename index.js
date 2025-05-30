@@ -12,6 +12,8 @@ function clearHistory() {
   if (!isConfirmed) return;
 
   historyDisplay.innerHTML = "";
+  document.getElementById("clear-history").style.display = "none";
+  document.getElementById("history").style.display = "none";
 }
 
 function appendValue(value) {
@@ -66,8 +68,10 @@ function calculate() {
     const newHistoryValue = document.createElement("p");
     newHistoryValue.textContent = `${historyValue} = ${result}`;
     historyDisplay.appendChild(newHistoryValue);
+    historyDisplay.scrollTop = historyDisplay.scrollHeight;
 
     document.getElementById("clear-history").style.display = "block";
+    document.getElementById("history").style.display = "block";
     display.value = result;
   } catch (error) {
     display.value = "Error";
