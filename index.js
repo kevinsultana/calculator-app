@@ -5,6 +5,14 @@ toggleDark.addEventListener("change", () => {
 });
 
 const display = document.getElementById("display");
+const historyDisplay = document.getElementById("history");
+
+function clearHistory() {
+  const isConfirmed = confirm("Are you sure you want to clear the history?");
+  if (!isConfirmed) return;
+
+  historyDisplay.innerHTML = "";
+}
 
 function appendValue(value) {
   if (display.value === "Error") {
@@ -44,6 +52,7 @@ function appendOperator(operator) {
 function calculate() {
   const lastChar = display.value.slice(-1);
   const isOperator = ["+", "-", "*", "/"].includes(lastChar);
+  const historyValue = display.value;
   try {
     if (isOperator) {
       alert("Please enter a valid number first.");
@@ -52,7 +61,14 @@ function calculate() {
       alert("Please enter a valid number first.");
       return;
     }
-    display.value = eval(display.value);
+
+    const result = eval(display.value);
+    const newHistoryValue = document.createElement("p");
+    newHistoryValue.textContent = `${historyValue} = ${result}`;
+    historyDisplay.appendChild(newHistoryValue);
+
+    document.getElementById("clear-history").style.display = "block";
+    display.value = result;
   } catch (error) {
     display.value = "Error";
   }
