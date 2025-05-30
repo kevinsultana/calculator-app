@@ -1,7 +1,7 @@
-const toggleBtn = document.getElementById("toggle-mode");
+const toggleDark = document.getElementById("toggle-dark");
 
-toggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
+toggleDark.addEventListener("change", () => {
+  document.body.classList.toggle("dark", toggleDark.checked);
 });
 
 const display = document.getElementById("display");
@@ -59,8 +59,6 @@ function calculate() {
 }
 
 window.addEventListener("keypress", (event) => {
-  console.log(event.key);
-
   if (event.key >= 0 && event.key <= 9) {
     appendValue(event.key);
   }
