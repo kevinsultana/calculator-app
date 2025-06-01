@@ -14,6 +14,22 @@ toggleDark.addEventListener("change", () => {
 const display = document.getElementById("display");
 const historyDisplay = document.getElementById("history");
 
+let rawDisplay = "";
+
+function formatNumber(value) {
+  const parts = value.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
+}
+
+function formatDisplay(display) {
+  return display.replace(/\d+(\.\d+)?/g, (match) => formatNumber(match));
+}
+
+function updateDisplay() {
+  display.value = formatDisplay(rawDisplay);
+}
+
 function clearHistory() {
   const isConfirmed = confirm("Are you sure you want to clear the history?");
   if (!isConfirmed) return;
@@ -25,73 +41,96 @@ function clearHistory() {
 
 function appendValue(value) {
   playClickSound();
+
   if (display.value === "Error") {
-    display.value = value;
-  } else {
-    display.value += value;
+    rawDisplay = "";
   }
+
+  const lastChar = rawDisplay.slice(-1);
+
+  if (value === ".") {
+    if (rawDisplay === "" || ["+", "-", "*", "/"].includes(lastChar)) {
+      rawDisplay += "0.";
+    } else {
+      rawDisplay += value;
+    }
+  } else {
+    rawDisplay += value;
+  }
+
+  updateDisplay();
 }
 
 function deleteLast() {
   playClickSound();
-  display.value = display.value.slice(0, -1);
+  rawDisplay = rawDisplay.slice(0, -1);
+  updateDisplay();
 }
 
 function clearDisplay() {
   playClickSound();
-  if (display.value && display.value !== "") {
+  if (rawDisplay) {
     let isConfirmed = confirm("Are you sure you want to clear the display?");
     if (isConfirmed) {
-      display.value = "";
+      rawDisplay = "";
+      updateDisplay();
     }
-    return;
   }
 }
 
 function appendOperator(operator) {
   playClickSound();
-  const lastChar = display.value.slice(-1);
+  const lastChar = rawDisplay.slice(-1);
   const isOperator = ["+", "-", "*", "/"].includes(lastChar);
 
-  if (display.value === "" && operator !== "-") return;
+  if (rawDisplay === "" && operator !== "-") return;
 
   if (isOperator) {
-    display.value = display.value.slice(0, -1) + operator;
+    rawDisplay = rawDisplay.slice(0, -1) + operator;
   } else {
-    display.value += operator;
+    rawDisplay += operator;
   }
+  updateDisplay();
 }
 
 function calculate() {
   playClickSound();
-  const lastChar = display.value.slice(-1);
+  const lastChar = rawDisplay.slice(-1);
   const isOperator = ["+", "-", "*", "/"].includes(lastChar);
-  const historyValue = display.value;
-  try {
-    if (isOperator) {
-      alert("Please enter a valid number first.");
-      return;
-    } else if (display.value === "") {
-      alert("Please enter a valid number first.");
-      return;
-    }
 
-    const result = eval(display.value);
-    const newHistoryValue = document.createElement("p");
-    newHistoryValue.textContent = `${historyValue} = ${result}`;
-    historyDisplay.appendChild(newHistoryValue);
+  if (isOperator || rawDisplay === "") {
+    alert("Please enter a valid number first.");
+    return;
+  }
+
+  if (lastChar === ".") {
+    alert("Please enter a valid number first.");
+    return;
+  }
+
+  try {
+    const result = eval(rawDisplay);
+    const formattedResult = formatNumber(result);
+    const historyItem = document.createElement("p");
+    historyItem.textContent = `${formatDisplay(
+      rawDisplay
+    )} = ${formattedResult}`;
+    historyDisplay.appendChild(historyItem);
     historyDisplay.scrollTop = historyDisplay.scrollHeight;
 
     document.getElementById("clear-history").style.display = "block";
     document.getElementById("history").style.display = "block";
-    display.value = result;
+
+    rawDisplay = result.toString();
+    updateDisplay();
   } catch (error) {
     display.value = "Error";
+    rawDisplay = "";
   }
 }
 
 window.addEventListener("keypress", (event) => {
-  if (event.key >= 0 && event.key <= 9) {
+  if (event.key >= "0" && event.key <= "9") {
     appendValue(event.key);
   }
   if (event.key === "Enter") {
