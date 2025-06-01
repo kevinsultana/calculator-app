@@ -1,3 +1,10 @@
+const clickSound = new Audio("./assets/sound/click.wav");
+
+function playClickSound() {
+  clickSound.currentTime = 0;
+  clickSound.play();
+}
+
 const toggleDark = document.getElementById("toggle-dark");
 
 toggleDark.addEventListener("change", () => {
@@ -17,6 +24,7 @@ function clearHistory() {
 }
 
 function appendValue(value) {
+  playClickSound();
   if (display.value === "Error") {
     display.value = value;
   } else {
@@ -25,10 +33,12 @@ function appendValue(value) {
 }
 
 function deleteLast() {
+  playClickSound();
   display.value = display.value.slice(0, -1);
 }
 
 function clearDisplay() {
+  playClickSound();
   if (display.value && display.value !== "") {
     let isConfirmed = confirm("Are you sure you want to clear the display?");
     if (isConfirmed) {
@@ -39,6 +49,7 @@ function clearDisplay() {
 }
 
 function appendOperator(operator) {
+  playClickSound();
   const lastChar = display.value.slice(-1);
   const isOperator = ["+", "-", "*", "/"].includes(lastChar);
 
@@ -52,6 +63,7 @@ function appendOperator(operator) {
 }
 
 function calculate() {
+  playClickSound();
   const lastChar = display.value.slice(-1);
   const isOperator = ["+", "-", "*", "/"].includes(lastChar);
   const historyValue = display.value;
