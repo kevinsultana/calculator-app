@@ -91,7 +91,7 @@ function appendOperator(operator) {
   if (rawDisplay === "" && operator !== "-") return;
 
   if (lastChar === ".") {
-    rawDisplay = rawDisplay.slice(0, -1) + operator;
+    alert("Please enter a valid number first.");
     updateDisplay();
     return;
   }
