@@ -119,6 +119,12 @@ function calculate() {
     return;
   }
 
+  const hasOperator = /[\+\-\*\/]/.test(rawDisplay);
+  if (!hasOperator) {
+    alert("Please enter a valid operator first.");
+    return;
+  }
+
   try {
     const result = eval(rawDisplay);
     const formattedResult = formatNumber(result);
