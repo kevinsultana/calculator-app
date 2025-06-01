@@ -49,6 +49,11 @@ function appendValue(value) {
   const lastChar = rawDisplay.slice(-1);
 
   if (value === ".") {
+    const parts = rawDisplay.split(/[\+\-\*\/]/);
+    const lastNumber = parts[parts.length - 1];
+
+    if (lastNumber.includes(".")) return;
+
     if (rawDisplay === "" || ["+", "-", "*", "/"].includes(lastChar)) {
       rawDisplay += "0.";
     } else {
@@ -84,6 +89,12 @@ function appendOperator(operator) {
   const isOperator = ["+", "-", "*", "/"].includes(lastChar);
 
   if (rawDisplay === "" && operator !== "-") return;
+
+  if (lastChar === ".") {
+    rawDisplay = rawDisplay.slice(0, -1) + operator;
+    updateDisplay();
+    return;
+  }
 
   if (isOperator) {
     rawDisplay = rawDisplay.slice(0, -1) + operator;
